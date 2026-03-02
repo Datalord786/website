@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Quiz Generator</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      text-align: center;
+      padding: 40px;
+      color: white;
+    }
+
+    .container {
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 10px;
+      width: 70%;
+      margin: auto;
+    }
+
+    input {
+      padding: 12px;
+      width: 60%;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background: #667eea;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #5a67d8;
+    }
+
+    #quiz {
+      text-align: left;
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Professional AI Quiz Generator</h1>
+
+  <div class="container">
+    <input type="text" id="topic" placeholder="Enter any topic...">
+    <button onclick="generateQuiz()">Generate Quiz</button>
+    <div id="quiz"></div>
+  </div>
+
+  <script>
+    async function generateQuiz() {
+      const topic = document.getElementById("topic").value;
+      const quizDiv = document.getElementById("quiz");
+
+      quizDiv.innerHTML = "Generating quiz...";
+
+      const response = await fetch("/generate-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic })
+      });
+
+      const data = await response.json();
+      quizDiv.innerHTML = data.quiz;
+    }
+  </script>
+
+</body>
+</html>
